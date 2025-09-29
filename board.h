@@ -46,7 +46,6 @@ void HumanMove() {
     
     while (true) {
         if (!(std::cin >> row >> column)) {
-            // Invalid input, clear error flag and consume the invalid input
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid input. Please enter valid integers for row and column." << std::endl;
@@ -120,13 +119,11 @@ bool draw() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (board[i][j] == ' ') {
-                // If there's an empty space, the game is not a draw
                 return false;
             }
         }
     }
 
-    // No empty spaces, the game is a draw
     return true;
 }
 
@@ -169,7 +166,6 @@ bool isMovesLeft(char board[3][3])
   
 int evaluate(char b[3][3]) 
 { 
-    // Checking for Rows for X or O victory. 
     for (int row = 0; row<3; row++) 
     { 
         if (b[row][0]==b[row][1] && 
@@ -225,7 +221,6 @@ int minimax(char board[3][3], int depth, bool isMax)
     if (isMovesLeft(board)==false) 
         return 0; 
   
-    // If this maximizer's move 
     if (isMax) 
     { 
         int best = -1000; 
@@ -235,16 +230,13 @@ int minimax(char board[3][3], int depth, bool isMax)
         { 
             for (int j = 0; j<3; j++) 
             { 
-                // Check if cell is empty 
                 if (board[i][j]==' ') 
                 { 
-                    // Make the move 
                     board[i][j] = player; 
   
                     best = max( best, 
                         minimax(board, depth+1, !isMax) ); 
   
-                    // Undo the move 
                     board[i][j] = ' '; 
                 } 
             } 
@@ -252,26 +244,21 @@ int minimax(char board[3][3], int depth, bool isMax)
         return best; 
     } 
   
-    // If this minimizer's move 
     else
     { 
         int best = 1000; 
   
-        // Traverse all cells 
         for (int i = 0; i<3; i++) 
         { 
             for (int j = 0; j<3; j++) 
             { 
-                // Check if cell is empty 
                 if (board[i][j]==' ') 
                 { 
-                    // Make the move 
                     board[i][j] = opponent; 
   
                     best = min(best, 
                            minimax(board, depth+1, !isMax)); 
   
-                    // Undo the move 
                     board[i][j] = ' '; 
                 } 
             } 
@@ -291,15 +278,12 @@ void aiMove()
     {
         for (int j = 0; j<3; j++)
         {
-            // Check if cell is empty
             if (board[i][j]==' ')
             {
-                // Make the move
                 board[i][j] = 'O';
   
                 int moveVal = minimax(board,0, false);
   
-                // Undo the move
                 board[i][j] = ' ';
   
                 if (moveVal > bestVal)
